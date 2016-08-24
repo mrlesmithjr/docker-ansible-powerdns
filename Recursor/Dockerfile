@@ -14,6 +14,9 @@ RUN apt-get -y install git software-properties-common && \
 # Copy Ansible Playbook
 COPY playbook.yml /playbook.yml
 
+# Copy PDNS Related Files
+COPY config/ /
+
 # Run Ansible playbook
 RUN ansible-playbook -i "localhost," -c local /playbook.yml
 
@@ -21,6 +24,7 @@ RUN ansible-playbook -i "localhost," -c local /playbook.yml
 RUN apt-get -y clean && \
     apt-get -y autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 
 # Copy entrypoint script and make executable
 COPY docker-entrypoint.sh /usr/local/bin

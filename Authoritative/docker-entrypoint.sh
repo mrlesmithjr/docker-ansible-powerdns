@@ -4,7 +4,7 @@ PDNS_RECURSOR_SERVER_IP="$(ping -q -c 1 -t 1 $PDNS_RECURSOR_SERVER | grep PING |
 
 # Configure powerdns
 ansible-playbook -i "localhost," -c local --extra-vars="pdns_allow_ddns_update_from=$PDNS_ALLOW_DDNS_UPDATE_FROM \
-pdns_api_key=$PDNS_API_KEY pdns_allow_ddns_update=$PDNS_ALLOW_DDNS_UPDATE pdns_json_interface=$PDNS_JSON_INTERFACE \
+pdns_api=$PDNS_API pdns_api_key=$PDNS_API_KEY pdns_allow_ddns_update=$PDNS_ALLOW_DDNS_UPDATE \
 pdns_gmysql_dbname=$PDNS_GMYSQL_DBNAME pdns_gmysql_host=$PDNS_GMYSQL_HOST pdns_gmysql_password=$PDNS_GMYSQL_PASSWORD \
 pdns_gmysql_user=$PDNS_GMYSQL_USER pdns_log_dns_queries=$PDNS_LOG_DNS_QUERIES \
 pdns_recursor_server_ip=$PDNS_RECURSOR_SERVER_IP pdns_webserver_address=$PDNS_WEBSERVER_ADDRESS \

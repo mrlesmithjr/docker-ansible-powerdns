@@ -11,6 +11,9 @@ RUN apt-get -y install git software-properties-common && \
     apt-get update && \
     apt-get -y install ansible
 
+# Copy PDNS Related Files
+COPY config/ /
+
 # Copy Ansible Playbook
 COPY playbook.yml /playbook.yml
 
@@ -28,12 +31,12 @@ EXPOSE 53 53/udp 8081
 # Define environment variables
 ENV PDNS_ALLOW_DDNS_UPDATE=yes \
     PDNS_ALLOW_DDNS_UPDATE_FROM=0.0.0.0/0 \
+    PDNS_API=yes \
     PDNS_API_KEY=changeme \
     PDNS_GMYSQL_DBNAME=powerdns \
     PDNS_GMYSQL_HOST=db \
     PDNS_GMYSQL_PASSWORD=powerdns \
     PDNS_GMYSQL_USER=powerdns \
-    PDNS_JSON_INTERFACE=yes \
     PDNS_LOG_DNS_QUERIES=yes \
     PDNS_RECURSOR_SERVER=pdns_recursor \
     PDNS_WEBSERVER_ADDRESS=0.0.0.0 \
@@ -41,12 +44,9 @@ ENV PDNS_ALLOW_DDNS_UPDATE=yes \
     PDNS_WEBSERVER_PORT=8081 \
     PDNS_WEBSERVER=yes
 
-# Copy PDNS SQL file
-COPY config/pdns.sql /
-
 # Copy Ansible PDNS config playbook
 COPY pdns_config.yml /
-COPY config/pdns.conf.j2 /
+#COPY config/pdns.conf.j2 /
 
 # Copy entrypoint script and make executable
 COPY docker-entrypoint.sh /usr/local/bin
