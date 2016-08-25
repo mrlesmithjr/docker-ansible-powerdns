@@ -1,8 +1,13 @@
 Repo Info
 =========
-This repo contains both PowerDNS Authoritative and Recursor versions 4.x...  
+This repo contains both PowerDNS Authoritative and Recursor for the following
+versions..  
+`3.x` - latest  
+`4.x`
 
 Each of these are available separately using [Docker] hub as:
+`mrlesmithjr/powerdns-authoritative:3.x`  
+`mrlesmithjr/powerdns-recursor:3.x`  
 `mrlesmithjr/powerdns-authoritative:4.x`  
 `mrlesmithjr/powerdns-recursor:4.x`
 
