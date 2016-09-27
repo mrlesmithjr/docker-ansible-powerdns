@@ -4,8 +4,11 @@
   become: true
   vars:
     - pdns_download_url: 'https://downloads.powerdns.com/releases/deb'
-    - pdns_recursor_version: '3.7.3-1'
   tasks:
+    - name: Updating Apt-Cache
+      apt:
+        update_cache: yes
+
     - name: Installing ca-certificates
       apt:
         name: "ca-certificates"
@@ -22,6 +25,9 @@
         force: "yes"
       with_items:
         - 'dnsutils'
+        - 'jq'
+        - 'python-mysqldb'
+        - 'mysql-client'
 
     - name: Adding PowerDNS Repo Key
       apt_key:
@@ -35,15 +41,13 @@
 
     - name: Adding PowerDNS Repo
       apt_repository:
-        repo: "deb [arch=amd64] http://repo.powerdns.com/ubuntu {{ ansible_distribution_release|lower }}-rec-40 main"
+        repo: "deb [arch=amd64] http://repo.powerdns.com/ubuntu {{ ansible_distribution_release|lower }}-auth-40 main"
         state: "present"
 
     - name: Installing PowerDNS Authoritative
       apt:
-        name: "pdns-recursor"
-        state: "present"
-
-#    - name: Installing Powerdns Recursor
-#      apt:
-#        deb: "{{ pdns_download_url }}/pdns-recursor_{{ pdns_recursor_version }}_amd64.deb"
-#        state: "present"
+        name: "{{ item }}"
+        state: "latest"
+      with_items:
+        - 'pdns-server'
+        - 'pdns-backend-mysql'
